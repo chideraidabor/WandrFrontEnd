@@ -1,31 +1,43 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wandr_frontend/strings.dart';
 
-class Login  {
-
-  signIn(String email, String password) async {
-    String loginUrl = Strings.wandr_url+"/login";
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map body = {"Email" : email, "Password" : password};
-    var jsonResponse;
-    var response = await http.post(loginUrl, body: body);
-    //Need to check the api status
-    if(response.statusCode == 200){
-      jsonResponse = json.decode(response.body);
-
-      print("Response status: ${response.statusCode}");
-      print("Response status: ${response.body}");
-
-      if(jsonResponse != null){
-        
-      }
-
-
-    }
+class LoginAPI {
+    Future<bool> setToken(String value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString('token', value);
   }
 
+  Future<String> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print (prefs.getString('token'));
+    return prefs.getString('token');
 
+  }
+
+        logIn(String email, String pass) async {
+         // String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE1NDc1OTkzLCJleHAiOjE2MzEyNDM5OTN9.8ERgLqGcaHhoxTB_hVoYYvCY7_sgHUlsJBHAcXde2hM";
+
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          Map body = {"Email" : email, "Password" : pass};
+          var jsonResponse;
+          String token = await getToken();
+
+          var res = await http.post(Strings.wandr_url+"/login", body: body);
+
+          // check the api status
+          if (res.statusCode == 200){
+            jsonResponse = json.decode(res.body);
+
+            print("Response status: ${res.statusCode}");
+            print("Response status: ${res.body}");
+            //print(json.decode(res.body).token);
+            setToken(jsonResponse['token']);
+            //sharedPreferences.setString("token", jsonResponse['token']);
+          }else{
+            print("Response status: ${res.body}");
+          }
+        }
 }
+

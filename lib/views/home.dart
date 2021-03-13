@@ -4,6 +4,7 @@ import 'package:wandr_frontend/views/tabs/event.dart';
 import 'package:wandr_frontend/views/tabs/chats.dart';
 
 class searchEvent extends StatefulWidget {
+
   @override
   _searchEventState createState() => _searchEventState();
 }
@@ -45,10 +46,16 @@ class _searchEventState extends State<searchEvent> {
       },
     );
     return Scaffold(
-      appBar: AppBar(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+        ),
       ),
+
       bottomNavigationBar: bottomNavBar,
       body: _pages[_currentIndex],
     );
+
+
   }
 }

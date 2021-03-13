@@ -1,3 +1,5 @@
-class String{
-  static String wandr_url = "jjj";
+
+class Strings{
+  static String wandr_url = "http://10.0.2.2:3000";
+
 }
