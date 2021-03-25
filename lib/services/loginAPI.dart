@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wandr_frontend/strings.dart';
 
 class LoginAPI {
+
     Future<bool> setToken(String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('token', value);
@@ -11,7 +12,7 @@ class LoginAPI {
 
   Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print (prefs.getString('token'));
+    //print (prefs.getString('token'));
     return prefs.getString('token');
 
   }
@@ -29,11 +30,7 @@ class LoginAPI {
           // check the api status
           if (res.statusCode == 200){
             jsonResponse = json.decode(res.body);
-
-            print("Response status: ${res.statusCode}");
-            print("Response status: ${res.body}");
-            //print(json.decode(res.body).token);
-            setToken(jsonResponse['token']);
+            setToken(jsonResponse['data']['token']['token']);
             //sharedPreferences.setString("token", jsonResponse['token']);
           }else{
             print("Response status: ${res.body}");

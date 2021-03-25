@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-class eventPage extends StatelessWidget {
+class EventPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();

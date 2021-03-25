@@ -1,7 +1,4 @@
 
-import 'package:flutter/material.dart';
-import 'dart:convert';
-
 class PlaceInfo {
   final int placeId;
   final String name;
@@ -20,4 +17,6 @@ class PlaceInfo {
       location: json['Location'],
     );
   }
+
+
 }

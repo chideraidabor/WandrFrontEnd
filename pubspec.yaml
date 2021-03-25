@@ -26,6 +26,8 @@ dependencies:
 
   http: ^0.12.2
   shared_preferences: ^0.5.8
+  table_calendar: ^2.3.3
+  syncfusion_flutter_calendar: ^18.4.46
 
 
 

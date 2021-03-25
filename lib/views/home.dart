@@ -2,29 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:wandr_frontend/views/tabs/search.dart';
 import 'package:wandr_frontend/views/tabs/event.dart';
 import 'package:wandr_frontend/views/tabs/chats.dart';
+import 'package:wandr_frontend/views/pages/Calendar.dart';
 
-class searchEvent extends StatefulWidget {
-
+class Home extends StatefulWidget {
   @override
-  _searchEventState createState() => _searchEventState();
+  _HomeState createState() => _HomeState();
 }
 
-class _searchEventState extends State<searchEvent> {
-
+class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    searchPage(),
-    eventPage(),
-    chatPage(),
+    SearchPage(),
+    //FullCalendar(),
+    EventPage(),
+    ChatPage(),
   ];
   @override
   Widget build(BuildContext context) {
-
     final bottomNavBar = BottomNavigationBar(
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor:Colors.grey.shade300,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
@@ -39,7 +38,7 @@ class _searchEventState extends State<searchEvent> {
           title: Text("Chats"),
         )
       ],
-      onTap: (index){
+      onTap: (index) {
         setState(() {
           _currentIndex = index;
         });
@@ -48,14 +47,10 @@ class _searchEventState extends State<searchEvent> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-        ),
+        child: AppBar(),
       ),
-
       bottomNavigationBar: bottomNavBar,
       body: _pages[_currentIndex],
     );
-
-
   }
 }
