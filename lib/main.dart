@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Screens/Welcome/welcome_screen.dart';
-import 'constants.dart';
+import 'package:wandr_frontend/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,13 +8,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Flutter Chat UI',
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
       theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.red,
+        accentColor: Color(0xFFFEF9EB),
       ),
-      home: WelcomeScreen(),
+      home: HomeScreen(),
     );
   }
 }
