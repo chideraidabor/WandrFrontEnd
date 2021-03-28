@@ -39,8 +39,6 @@ class API_Manager {
       Iterable l = jsonDecode(response.body);
       print("Response status: ${response.statusCode}");
       print("Response status: ${response.body}");
-      // print (jsonResponse['data']['token']['token']);
-      //print(json.decode(res.body).token);
       return List<PlaceInfo>.from(l.map((e) => PlaceInfo.fromJson(e)));
     } else {
       throw Exception("Failed to Load PlaceInfo");
