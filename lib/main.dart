@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/views/pages/newCalendar.dart';
-
-import 'constants.dart';
+import 'package:wandr_frontend/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,14 +8,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Chat UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.red,
+        accentColor: Color(0xFFFEF9EB),
       ),
-      //home: Home(),
-      home: NewCalendar(),
+      home: HomeScreen(),
     );
   }
 }
