@@ -4,9 +4,7 @@ import 'package:wandr_frontend/views/tabs/search.dart';
 import 'package:wandr_frontend/views/pages/Calendar.dart';
 import 'package:wandr_frontend/views/pages/newCalendar.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -16,8 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
       ),
       //home: Home(),
       home: NewCalendar(),
