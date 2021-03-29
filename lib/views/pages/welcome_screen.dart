@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/components/rounded_button.dart';
+import 'package:wandr_frontend/views/widgets/rounded_button.dart';
 import 'package:wandr_frontend/views/widgets/welcomeBackground.dart';
 
 import '../../constants.dart';
