@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/components/already_have_an_account_acheck.dart';
-import 'package:wandr_frontend/components/rounded_button.dart';
-import 'package:wandr_frontend/components/rounded_input_field.dart';
-import 'package:wandr_frontend/components/rounded_password_field.dart';
 import 'package:wandr_frontend/views/pages/signup_screen.dart';
+import 'package:wandr_frontend/views/widgets/already_have_an_account_acheck.dart';
 import 'package:wandr_frontend/views/widgets/loginBackground.dart';
+import 'package:wandr_frontend/views/widgets/rounded_button.dart';
+import 'package:wandr_frontend/views/widgets/rounded_input_field.dart';
+import 'package:wandr_frontend/views/widgets/rounded_password_field.dart';
 
 class LoginScreen extends StatelessWidget {
   @override

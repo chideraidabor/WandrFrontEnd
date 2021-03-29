@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/models/message_model.dart';
-import 'package:wandr_frontend/screens/chat_screen.dart';
+import 'package:wandr_frontend/model/message_model.dart';
+import 'package:wandr_frontend/views/pages/chat_screen.dart';
 
 class FavoriteContacts extends StatelessWidget {
   @override
@@ -57,7 +57,7 @@ class FavoriteContacts extends StatelessWidget {
                         CircleAvatar(
                           radius: 35.0,
                           backgroundImage:
-                          AssetImage(favorites[index].imageUrl),
+                              AssetImage(favorites[index].imageUrl),
                         ),
                         SizedBox(height: 6.0),
                         Text(

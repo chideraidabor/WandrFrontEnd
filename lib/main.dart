@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/screens/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wandr_frontend/blocs/tab/tabBloc.dart';
+import 'package:wandr_frontend/routes.dart';
+import 'package:wandr_frontend/views/pages/homePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +17,15 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.red,
         accentColor: Color(0xFFFEF9EB),
       ),
-      home: HomeScreen(),
+      routes: {
+        WandrRoutes.home: (context) {
+          return MultiBlocProvider(providers: [
+            BlocProvider<TabBloc>(
+              create: (context) => TabBloc(),
+            )
+          ], child: HomePage());
+        }
+      },
     );
   }
 }

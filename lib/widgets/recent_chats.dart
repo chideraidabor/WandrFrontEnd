@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/models/message_model.dart';
-import 'package:wandr_frontend/screens/chat_screen.dart';
+import 'package:wandr_frontend/model/message_model.dart';
+import 'package:wandr_frontend/views/pages/chat_screen.dart';
 
 class RecentChats extends StatelessWidget {
   @override
@@ -35,7 +35,7 @@ class RecentChats extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.only(top: 5.0, bottom: 5.0, right: 20.0),
                   padding:
-                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -94,22 +94,22 @@ class RecentChats extends StatelessWidget {
                           SizedBox(height: 5.0),
                           chat.unread
                               ? Container(
-                            width: 40.0,
-                            height: 20.0,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              '1',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
+                                  width: 40.0,
+                                  height: 20.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '1',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
                               : Text(''),
                         ],
                       ),

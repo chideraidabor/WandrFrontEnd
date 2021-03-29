@@ -3,17 +3,14 @@ import 'package:wandr_frontend/widgets/category_selector.dart';
 import 'package:wandr_frontend/widgets/contacts.dart';
 import 'package:wandr_frontend/widgets/recent_chats.dart';
 
-class HomeScreen extends StatefulWidget {
+class ChatTab extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ChatTabState createState() => _ChatTabState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-
-
+class _ChatTabState extends State<ChatTab> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -59,4 +56,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
