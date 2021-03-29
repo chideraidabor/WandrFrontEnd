@@ -37,7 +37,7 @@ class RecentChats extends StatelessWidget {
                   padding:
                   EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                    color: chat.unread ? Color(0xFFFFEFEE) : Colors.white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0),
@@ -97,12 +97,12 @@ class RecentChats extends StatelessWidget {
                             width: 40.0,
                             height: 20.0,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.green,
                               borderRadius: BorderRadius.circular(30.0),
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              'NEW',
+                              '1',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.0,
