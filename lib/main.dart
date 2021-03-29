@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/views/home.dart';
-import 'package:wandr_frontend/views/tabs/search.dart';
-import 'package:wandr_frontend/views/pages/Calendar.dart';
 import 'package:wandr_frontend/views/pages/newCalendar.dart';
+
+import 'constants.dart';
 
 void main() => runApp(MyApp());
 
