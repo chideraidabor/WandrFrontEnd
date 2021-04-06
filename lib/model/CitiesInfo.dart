@@ -1,7 +1,4 @@
-
-
-class CityInfo{
-
+class CityInfo {
   final String cityName;
   final String stateProvince;
 

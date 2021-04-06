@@ -1,4 +1,3 @@
-import 'package:wandr_frontend/model/EventInfo.dart';
 import 'package:wandr_frontend/model/placeInfo.dart';
 
 class EventItem {

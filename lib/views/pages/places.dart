@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:wandr_frontend/model/placeInfo.dart';
+import 'package:wandr_frontend/services/apiManager.dart';
 import 'package:wandr_frontend/services/loginAPI.dart';
-import 'package:wandr_frontend/services/api_manager.dart';
+
 class Place extends StatefulWidget {
 
 
