@@ -10,7 +10,7 @@ class ChatTab extends StatefulWidget {
 
 class _ChatTabState extends State<ChatTab> {
 
-  nested() {
+  nested({List<Widget> children}) {
     return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -56,7 +56,7 @@ class _ChatTabState extends State<ChatTab> {
           ),
         ],
       ),
-      body: Column(
+      body: nested(
         children: <Widget>[
           CategorySelector(),
           Expanded(
