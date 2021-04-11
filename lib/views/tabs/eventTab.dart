@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wandr_frontend/model/EventInfo.dart';
+
 import 'package:wandr_frontend/model/placeInfo.dart';
+
+import '../../model/EventInfo.dart';
 
 class EventTab extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class EventTab extends StatefulWidget {
 class _EventTabState extends State<EventTab> {
   double deviceHeight;
   double deviceWidth;
-  List<EventItem> events = [];
+  List<Eventitem> events = [];
   List<PlaceInfo> places = [];
   @override
   Widget build(BuildContext context) {

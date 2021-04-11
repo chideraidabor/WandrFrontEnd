@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wandr_frontend/controllers/eventController.dart';
-import 'package:wandr_frontend/model/EventInfo.dart';
+
+import '../../model/EventInfo.dart';
+import 'join_Event_Page.dart';
 
 class NewCalendarPage extends StatefulWidget {
   String placeName;
@@ -19,9 +22,10 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
   double deviceHeight;
   double deviceWidth;
   var allEvents;
+  bool isHighlighted = false;
   List<Map<String, dynamic>> listOfDate = [];
   EventController eventController;
-
+  Map selectedDate;
   List listOfPictures = [
     "https://blog.texasbar.com/files/2011/02/ConstanceMims1.jpg",
     "http://thenewcode.com/assets/images/thumbnails/sarah-parmenter.jpeg",
@@ -75,17 +79,38 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'MONDAY, FEB 24',
+                                  DateFormat.MMMEd()
+                                      .format(eventController.selectedDate),
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Icon(Icons.arrow_left),
-                              Icon(Icons.arrow_right),
+                              IconButton(
+                                  icon: Icon(Icons.arrow_left),
+                                  onPressed: () {
+                                    eventController.subtractDay();
+                                  }),
+                              IconButton(
+                                  icon: Icon(Icons.arrow_right),
+                                  onPressed: () {
+                                    eventController.addDay();
+                                  }),
                             ],
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 50),
-                            child: Icon(Icons.calendar_today),
+                            child: InkWell(
+                                onTap: () async {
+                                  final DateTime picked = await showDatePicker(
+                                      context: context,
+                                      initialDate: eventController.selectedDate,
+                                      firstDate: DateTime(1750),
+                                      lastDate: DateTime(2050));
+
+                                  if (picked != null &&
+                                      picked != eventController.selectedDate)
+                                    eventController.updateDay(picked);
+                                },
+                                child: Icon(Icons.calendar_today)),
                           )
                         ],
                       ),
@@ -113,28 +138,26 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                               (e) => Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      e["event"] != ""
-                                                          ? MainAxisAlignment
-                                                              .start
-                                                          : MainAxisAlignment
-                                                              .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        '${e["time"].hour}:${e["time"].minute == 0 ? "00" : e["time"].minute}'),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            //highlight
-                                                            print(
-                                                                "i clicked on the time slot");
-                                                          },
-                                                          child: Padding(
+                                                child: Container(
+                                                  color: selectedDate == e
+                                                      ? Colors.red
+                                                      : Colors.white,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        e["event"] != ""
+                                                            ? MainAxisAlignment
+                                                                .start
+                                                            : MainAxisAlignment
+                                                                .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          '${e["time"].hour}:${e["time"].minute == 0 ? "00" : e["time"].minute}'),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
                                                             padding: e["event"] !=
                                                                     ""
                                                                 ? EdgeInsets
@@ -168,22 +191,35 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                                                       ),
                                                                     ),
                                                                   ))
-                                                                : Container(
-                                                                    width: 300,
-                                                                    height: 10,
-                                                                    color: Colors
-                                                                        .grey),
+                                                                : InkWell(
+                                                                    onTap: () {
+                                                                      setState(
+                                                                          () {
+                                                                        selectedDate =
+                                                                            e;
+                                                                        isHighlighted =
+                                                                            true;
+                                                                      });
+                                                                    },
+                                                                    child: Container(
+                                                                        width:
+                                                                            300,
+                                                                        height:
+                                                                            10,
+                                                                        color: Colors
+                                                                            .grey),
+                                                                  ),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 10.0),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 10.0),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             )
@@ -202,24 +238,42 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                height: 50,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.grey),
-                                child: Center(
-                                  child: Text("Back"),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  print("i clicked back");
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Colors.grey),
+                                  child: Center(
+                                    child: Text("Back"),
+                                  ),
                                 ),
                               ),
-                              Container(
-                                height: 50,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.grey),
-                                child: Center(
-                                  child: Text("Next"),
+                              InkWell(
+                                onTap: () {
+                                  print("tapped next");
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => JoinEventPage()));
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: isHighlighted == true
+                                          ? Colors.red
+                                          : Colors.grey),
+                                  child: Center(
+                                    child: Text("Next",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
                                 ),
                               ),
                             ])),
@@ -229,7 +283,7 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
   }
 
   void getData() async {
-    List<EventItem> data = await eventController.getEventData();
+    List<Eventitem> data = await eventController.getEventData();
 
     for (int i = 0; i < 30; i++) {
       listOfDate.add({
@@ -260,7 +314,7 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
     setState(() {});
   }
 
-  allotEvent(List<EventItem> data, DateTime time) {
+  allotEvent(List<Eventitem> data, DateTime time) {
     String title = "";
     data.forEach((element) {
       if (element.eventStartTime.hour == time.hour &&
@@ -271,10 +325,3 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
     return title;
   }
 }
-
-// if(i%2==0){
-//   return 1;
-// }
-// else{
-//   return 0;
-// }

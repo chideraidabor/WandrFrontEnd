@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wandr_frontend/model/placeInfo.dart';
 import 'package:wandr_frontend/model/citiesInfo.dart';
-import 'package:wandr_frontend/model/eventInfo.dart';
-import 'package:wandr_frontend/model/userEventInfo.dart';
+
 import 'package:wandr_frontend/strings.dart';
 import 'package:wandr_frontend/services/loginAPI.dart';
+
+import '../model/EventInfo.dart';
 
 class API_Manager {
   Future<List<CityInfo>> getCity(String city) async {
@@ -48,7 +49,7 @@ class API_Manager {
     }
   }
 
-  Future<List<EventItem>> getEvents() async {
+  Future<List<Eventitem>> getEvents() async {
     await LoginAPI().logIn("hanzomain@gmail.com", "q1w2e3r4");
     String token = await LoginAPI().getToken();
     final response = await http.get(Strings.wandr_url + "/events", headers: {
@@ -60,13 +61,13 @@ class API_Manager {
       Iterable l = jsonDecode(response.body);
       print("Response status: ${response.statusCode}");
       print("Response status: ${response.body}");
-      return List<EventItem>.from(l.map((e) => EventItem.fromJson(e)));
+      return List<Eventitem>.from(l.map((e) => Eventitem.fromJson(e)));
     } else {
       throw Exception("Failed to Load EventInfo");
     }
   }
 
-  Future<List<EventItem>> getCertainEvent({int id}) async {
+  Future<List<Eventitem>> getCertainEvent({int id}) async {
     await LoginAPI().logIn("hanzomain@gmail.com", "q1w2e3r4");
     String token = await LoginAPI().getToken();
     final response =
@@ -75,12 +76,12 @@ class API_Manager {
       'accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
-    List data = response.body == "" ? []: [jsonDecode(response.body)];
+    List data = response.body == "" ? [] : [jsonDecode(response.body)];
     if (response.statusCode == 200) {
       Iterable l = data;
       print("Response status: ${response.statusCode}");
       print("Response status: ${response.body}");
-      return List<EventItem>.from(l.map((e) => EventItem.fromJson(e)));
+      return List<Eventitem>.from(l.map((e) => Eventitem.fromJson(e)));
     } else {
       throw Exception("Failed to Load EventInfo");
     }
