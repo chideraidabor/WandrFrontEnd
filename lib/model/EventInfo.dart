@@ -1,7 +1,6 @@
-import 'package:wandr_frontend/model/EventInfo.dart';
 import 'package:wandr_frontend/model/placeInfo.dart';
 
-class EventItem {
+class Eventitem {
   PlaceInfo placeInfo;
 
   final int eventId;
@@ -11,15 +10,15 @@ class EventItem {
   final DateTime eventStartTime;
   final DateTime eventEndTime;
 
-  EventItem(
+  Eventitem(
       {this.eventId,
       this.eventTitle,
       this.createdAt,
       this.eventStartTime,
       this.eventEndTime});
 
-  factory EventItem.fromJson(Map<String, dynamic> json) {
-    return EventItem(
+  factory Eventitem.fromJson(Map<String, dynamic> json) {
+    return Eventitem(
         eventId: json['EventId'],
         eventTitle: json['Title'],
         createdAt: DateTime.parse(json['CreatedAt']),

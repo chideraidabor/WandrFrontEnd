@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wandr_frontend/controllers/eventController.dart';
 import 'package:wandr_frontend/model/citiesInfo.dart';
 import 'package:wandr_frontend/model/placeInfo.dart';
 import 'package:wandr_frontend/services/apiManager.dart';
 import 'package:wandr_frontend/views/pages/placePage.dart';
-import 'package:wandr_frontend/views/pages/calendarPage.dart';
+import 'package:wandr_frontend/widgets/ios_alert.dart';
+
+import '../pages/pages.dart';
 
 class SearchTab extends StatefulWidget {
   //SearchPage({Key key}) : super(key: key);
@@ -56,82 +60,9 @@ class _SearchTabState extends State<SearchTab> {
                       child: ListView.builder(
                         itemCount: places.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              print("I CLICKED");
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => CalendarPage(
-                                      placeName: searchController.text),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 200,
-                                width: deviceWidth,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Column(
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.pink,
-                                          // image: DecorationImage(image: NetworkImage(places[index].)),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.black12,
-                                          ),
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(20),
-                                            bottomRight: Radius.circular(20),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                places[index].name,
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Text(places[index].location),
-                                              Row(
-                                                children: [
-                                                  Text(places[index]
-                                                      .description),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          return Consumer<EventController>(
+                            builder: (context, eventController, child) =>
+                                cityContainer(context, index, eventController),
                           );
                         },
                       ),
@@ -140,6 +71,88 @@ class _SearchTabState extends State<SearchTab> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget cityContainer(
+    BuildContext context,
+    int index,
+    EventController eventController,
+  ) {
+    return InkWell(
+      onTap: () {
+        eventController.setId(places[index].placeId);
+        print("I CLICKED");
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            //change
+            builder: (context) => NewCalendarPage(
+                //not supposed to pass in the search. pass the title of the
+                //place. cities[index].cityName
+                placeName: searchController.text),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 200,
+          width: deviceWidth,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                    // image: DecorationImage(image: NetworkImage(places[index].)),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black12,
+                    ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          places[index].name,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(places[index].location),
+                        Row(
+                          children: [
+                            Text(places[index].description),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -192,7 +205,7 @@ class _SearchTabState extends State<SearchTab> {
               ),
             ),
           );
-          // }  // }ELSE
+          
         });
   }
 
@@ -202,12 +215,6 @@ class _SearchTabState extends State<SearchTab> {
         itemBuilder: (context, index) {
           //wrap here
           return InkWell(
-            // onTap: (){
-            //   print("I CLICKED");
-            //   Navigator.of(context).push(
-            //     MaterialPageRoute(builder: (context) => Calendar(searchController.text)),
-            //   );
-            // },
             child: Card(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,12 +267,16 @@ class _SearchTabState extends State<SearchTab> {
             color: Colors.red,
             //CHECK IF ANYTHING IS WRITTEN OR NOT
             onPressed: () async {
-              print("getting data");
-              var data = await API_Manager().getCity(searchController.text);
-              setState(() {
-                print(data);
-                cities = data;
-              });
+              if (searchController.text == '') {
+                iosAlert(context: context, content: "Type a city");
+              } else {
+                print("getting data");
+                var data = await API_Manager().getCity(searchController.text);
+                setState(() {
+                  print(data);
+                  cities = data;
+                });
+              }
             },
           ),
           contentPadding: EdgeInsets.only(top: 15.0),
