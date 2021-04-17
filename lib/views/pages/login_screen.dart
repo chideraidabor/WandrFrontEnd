@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wandr_frontend/model/login_model.dart';
 import 'package:wandr_frontend/views/pages/signup_screen.dart';
 import 'package:wandr_frontend/views/widgets/already_have_an_account_acheck.dart';
 import 'package:wandr_frontend/views/widgets/loginBackground.dart';
@@ -7,6 +8,14 @@ import 'package:wandr_frontend/views/widgets/rounded_input_field.dart';
 import 'package:wandr_frontend/views/widgets/rounded_password_field.dart';
 
 class LoginScreen extends StatelessWidget {
+  LoginRequestModel requestModel;
+
+  @override
+  void initState(){
+    requestModel = new LoginRequestModel();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -22,13 +31,30 @@ class LoginScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: size.height * 0.03),
-              SizedBox(height: size.height * 0.03),
+
               RoundedInputField(
                 hintText: "Your Email",
-                onChanged: (value) {},
+                onChanged: (value) {
+                new TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    onSaved: (input) => requestModel.email = input,
+                    validator: (input) => !input.contains("@")
+                        ? "Email Address is not valid"
+                        : null
+                );
+                },
               ),
               RoundedPasswordField(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  new TextFormField(
+                      keyboardType: TextInputType.text,
+                      onSaved: (input) => requestModel.password = input,
+                      validator: (input) => input.length < 3
+                          ? "Password must be more than 3 charcters"
+                          : null
+                  );
+
+                },
               ),
               RoundedButton(
                 text: "LOGIN",
