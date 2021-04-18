@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wandr_frontend/blocs/tab/tabBloc.dart';
 import 'package:wandr_frontend/routes.dart';
 import 'package:wandr_frontend/views/pages/homePage.dart';
+import 'package:wandr_frontend/views/pages/login_screen.dart';
+import 'package:wandr_frontend/views/pages/welcome_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,8 +26,12 @@ class MyApp extends StatelessWidget {
               create: (context) => TabBloc(),
             )
           ], child: HomePage());
+        },
+        WandrRoutes.login: (context) {
+          return LoginScreen();
         }
       },
+      initialRoute: WandrRoutes.login,
     );
   }
 }
