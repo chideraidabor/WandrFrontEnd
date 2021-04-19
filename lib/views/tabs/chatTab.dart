@@ -45,7 +45,7 @@ class _ChatTabState extends State<ChatTab> {
               ),
               child: Column(
                 children: <Widget>[
-                  // FavoriteContacts(),
+                  //  FavoriteContacts(),
                   RecentChats(),
                 ],
               ),
