@@ -108,7 +108,8 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
 
                                   if (picked != null &&
                                       picked != eventController.selectedDate)
-                                    eventController.updateDay(picked);
+                                    await eventController.updateDay(picked);
+                                  await getData();
                                 },
                                 child: Icon(Icons.calendar_today)),
                           )
@@ -250,7 +251,10 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                       borderRadius: BorderRadius.circular(30),
                                       color: Colors.grey),
                                   child: Center(
-                                    child: Text("Back"),
+                                    child: Text("Back",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black)),
                                   ),
                                 ),
                               ),
@@ -271,7 +275,9 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                   child: Center(
                                     child: Text("Next",
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: isHighlighted == true
+                                                ? Colors.white
+                                                : Colors.black,
                                             fontWeight: FontWeight.bold)),
                                   ),
                                 ),
@@ -282,7 +288,7 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
     );
   }
 
-  void getData() async {
+  getData() async {
     List<Eventitem> data = await eventController.getEventData();
 
     for (int i = 0; i < 30; i++) {

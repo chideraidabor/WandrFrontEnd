@@ -1,4 +1,3 @@
-
 class PlaceInfo {
   final int placeId;
   final String name;
@@ -6,7 +5,8 @@ class PlaceInfo {
   final String description;
   final String location;
 
-  PlaceInfo({this.placeId, this.name, this.type, this.description, this.location});
+  PlaceInfo(
+      {this.placeId, this.name, this.type, this.description, this.location});
 
   factory PlaceInfo.fromJson(Map<String, dynamic> json) {
     return PlaceInfo(
@@ -17,6 +17,8 @@ class PlaceInfo {
       location: json['Location'],
     );
   }
+
+   
 
 
 }

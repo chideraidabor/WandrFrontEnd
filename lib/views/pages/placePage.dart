@@ -21,7 +21,7 @@ class _PlacePageState extends State<PlacePage> {
   Widget build(BuildContext context) {
 //Future<Scaffold>
     thePlace(String text) async {
-      var data = await API_Manager().getPlace(text);
+      var data = await API_Manager().getPlace(text, context);
       setState(() {
         print(data);
         places = data;

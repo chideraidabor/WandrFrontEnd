@@ -174,7 +174,7 @@ class _SearchTabState extends State<SearchTab> {
                       onTap: () async {
                         print("getting place data");
                         places = await API_Manager()
-                            .getPlace(cities[index].cityName);
+                            .getPlace(cities[index].cityName, context);
                         setState(() {
                           showPlaces = true;
                           // print(data);
@@ -205,7 +205,6 @@ class _SearchTabState extends State<SearchTab> {
               ),
             ),
           );
-          
         });
   }
 
@@ -271,7 +270,8 @@ class _SearchTabState extends State<SearchTab> {
                 iosAlert(context: context, content: "Type a city");
               } else {
                 print("getting data");
-                var data = await API_Manager().getCity(searchController.text);
+                var data =
+                    await API_Manager().getCity(searchController.text, context);
                 setState(() {
                   print(data);
                   cities = data;

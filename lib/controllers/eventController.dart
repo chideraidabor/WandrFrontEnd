@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:wandr_frontend/services/apiManager.dart';
 
@@ -32,8 +33,9 @@ class EventController extends ChangeNotifier {
 
   getEventData() async {
     notifyListeners();
-    _eventItem =
-        (await API_Manager().getCertainEvent(id: _id)).cast<Eventitem>();
+    _eventItem = await API_Manager().getDateOfEvents(
+        id: _id.toString(),
+        date: "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}");
     isLoading = false;
     notifyListeners();
     return _eventItem;
@@ -41,16 +43,26 @@ class EventController extends ChangeNotifier {
 
   void addDay() {
     selectedDate = selectedDate.add(const Duration(days: 1));
+    getEventsOfParticularDay();
     notifyListeners();
   }
 
   void subtractDay() {
     selectedDate = selectedDate.subtract(const Duration(days: 1));
+    getEventsOfParticularDay();
     notifyListeners();
   }
 
-  void updateDay(DateTime selectedDay) {
+  Future updateDay(DateTime selectedDay) async {
     selectedDate = selectedDay;
+    await getEventsOfParticularDay();
+    notifyListeners();
+  }
+
+  Future getEventsOfParticularDay() async {
+    _eventItem = await API_Manager().getDateOfEvents(
+        id: _id.toString(),
+        date: "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}");
     notifyListeners();
   }
 }

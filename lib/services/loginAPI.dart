@@ -12,14 +12,13 @@ class LoginAPI {
 
   Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    //print (prefs.getString('token'));
     return prefs.getString('token');
 
   }
 
         logIn(String email, String pass) async {
          // String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE1NDc1OTkzLCJleHAiOjE2MzEyNDM5OTN9.8ERgLqGcaHhoxTB_hVoYYvCY7_sgHUlsJBHAcXde2hM";
-
+         //token of a user that has an event eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE4MzMzNTIwLCJleHAiOjE2MzQxMDE1MjB9.YiL30W4ClBIm8OMhKvcHOlEHFRVvYoehbIj0q-Q0QUI
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           Map body = {"Email" : email, "Password" : pass};
           var jsonResponse;
