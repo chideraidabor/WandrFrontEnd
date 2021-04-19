@@ -10,7 +10,8 @@ import 'join_Event_Page.dart';
 
 class NewCalendarPage extends StatefulWidget {
   String placeName;
-  NewCalendarPage({this.placeName});
+  int placeId;
+  NewCalendarPage({this.placeName, this.placeId});
 
   //NewCalendarPage({Key key}) : super(key: key);
 
@@ -87,12 +88,14 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                               IconButton(
                                   icon: Icon(Icons.arrow_left),
                                   onPressed: () {
-                                    eventController.subtractDay();
+                                    eventController.subtractDay(context);
+                                    getData();
                                   }),
                               IconButton(
                                   icon: Icon(Icons.arrow_right),
                                   onPressed: () {
-                                    eventController.addDay();
+                                    eventController.addDay(context);
+                                    getData();
                                   }),
                             ],
                           ),
@@ -167,49 +170,56 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                                                             30)
                                                                 : EdgeInsets
                                                                     .all(8.0),
-                                                            child: e["event"] !=
-                                                                    ""
-                                                                ? Stack(
-                                                                    children: List
-                                                                        .generate(
-                                                                    6,
-                                                                    (index) =>
-                                                                        Padding(
-                                                                      padding:
-                                                                          EdgeInsets
-                                                                              .only(
-                                                                        left: index *
-                                                                            20.0,
+                                                            child:
+                                                                e["event"] != ""
+                                                                    ? InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            selectedDate =
+                                                                                e;
+                                                                            isHighlighted =
+                                                                                true;
+                                                                          });
+                                                                        },
+                                                                        child: Stack(
+                                                                            children: List.generate(
+                                                                          6,
+                                                                          (index) =>
+                                                                              Padding(
+                                                                            padding:
+                                                                                EdgeInsets.only(
+                                                                              left: index * 20.0,
+                                                                            ),
+                                                                            child:
+                                                                                CircleAvatar(
+                                                                              backgroundImage: NetworkImage(listOfPictures[Random().nextInt(listOfPictures.length)]),
+                                                                              backgroundColor: Colors.green,
+                                                                              radius: 12,
+                                                                            ),
+                                                                          ),
+                                                                        )),
+                                                                      )
+                                                                    : InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            selectedDate =
+                                                                                e;
+                                                                            isHighlighted =
+                                                                                true;
+                                                                          });
+                                                                        },
+                                                                        child: Container(
+                                                                            width:
+                                                                                300,
+                                                                            height:
+                                                                                10,
+                                                                            color:
+                                                                                Colors.grey),
                                                                       ),
-                                                                      child:
-                                                                          CircleAvatar(
-                                                                        backgroundImage:
-                                                                            NetworkImage(listOfPictures[Random().nextInt(listOfPictures.length)]),
-                                                                        backgroundColor:
-                                                                            Colors.green,
-                                                                        radius:
-                                                                            12,
-                                                                      ),
-                                                                    ),
-                                                                  ))
-                                                                : InkWell(
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        selectedDate =
-                                                                            e;
-                                                                        isHighlighted =
-                                                                            true;
-                                                                      });
-                                                                    },
-                                                                    child: Container(
-                                                                        width:
-                                                                            300,
-                                                                        height:
-                                                                            10,
-                                                                        color: Colors
-                                                                            .grey),
-                                                                  ),
                                                           ),
                                                           Padding(
                                                             padding:
@@ -262,7 +272,10 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
                                 onTap: () {
                                   print("tapped next");
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => JoinEventPage()));
+                                      builder: (context) => JoinEventPage(
+                                            selectedData: selectedDate,
+                                            placeId: widget.placeId,
+                                          )));
                                 },
                                 child: Container(
                                   height: 50,
@@ -289,8 +302,8 @@ class _NewCalendarPageState extends State<NewCalendarPage> {
   }
 
   getData() async {
-    List<Eventitem> data = await eventController.getEventData();
-
+    List<Eventitem> data = await eventController.getEventData(context: context);
+    listOfDate = [];
     for (int i = 0; i < 30; i++) {
       listOfDate.add({
         "time": DateTime(

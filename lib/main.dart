@@ -15,41 +15,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => EventController(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Chat UI',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.red,
-          accentColor: Color(0xFFFEF9EB),
-        ),
-        routes: {
-          WandrRoutes.home: (context) {
-            return MultiBlocProvider(providers: [
-              BlocProvider<TabBloc>(
-                create: (context) => TabBloc(),
-              )
-            ], child: HomePage());
-          }
-        },
-      ),
-      routes: {
-        WandrRoutes.home: (context) {
-          return MultiBlocProvider(providers: [
-            BlocProvider<TabBloc>(
-              create: (context) => TabBloc(),
-            )
-          ], child: HomePage());
-        },
-        WandrRoutes.login: (context) {
-          return LoginScreen();
-        }
-      },
-      initialRoute: WandrRoutes.login,
-    );
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => EventController(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Chat UI',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.red,
+            accentColor: Color(0xFFFEF9EB),
+          ),
+          routes: {
+            WandrRoutes.home: (context) {
+              return MultiBlocProvider(providers: [
+                BlocProvider<TabBloc>(
+                  create: (context) => TabBloc(),
+                )
+              ], child: HomePage());
+            },
+            WandrRoutes.login: (context) {
+              return LoginScreen();
+            }
+          },
+          initialRoute: WandrRoutes.login,
+        ));
   }
 }
