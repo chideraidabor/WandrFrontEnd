@@ -9,6 +9,7 @@ import 'package:wandr_frontend/views/widgets/loginBackground.dart';
 import 'package:wandr_frontend/views/widgets/rounded_button.dart';
 import 'package:wandr_frontend/views/widgets/rounded_input_field.dart';
 import 'package:wandr_frontend/views/widgets/rounded_password_field.dart';
+import 'package:wandr_frontend/widgets/ios_alert.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -58,6 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (loginResponse) {
                     Navigator.pushNamed(context, WandrRoutes.home);
                   } else {
+                    iosAlert(
+                        context: context, content: "Wrong password or email !");
                     print("Login invalid");
                   }
                 },

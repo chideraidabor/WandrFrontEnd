@@ -191,21 +191,54 @@ class API_Manager {
             'accept': 'application/json',
             'Authorization': 'Bearer $token',
           });
-      List data = response.body == "" ? [] : [jsonDecode(response.body)];
+      List data = response.body == "" ? [] : jsonDecode(response.body);
       if (response.statusCode == 200) {
-        Iterable l = data;
         print("Response status: ${response.statusCode}");
         print("Response status: ${response.body}");
         //return response.body;
-        if (l.length == 1) {
+        if (data.length == 0) {
           return [];
         }
-        return List<Eventitem>.from(l.map((e) => Eventitem.fromJson(e)));
+        List<Eventitem> eventItem =
+            data.map((e) => Eventitem.fromJson(e)).toList();
+        return eventItem;
       } else {
         throw Exception("Failed to Load Events of this specific date");
       }
     } catch (e) {
-      iosAlert(context: context, content: "Check your internet connection!");
+      // iosAlert(context: context, content: "Check your internet connection!");
+      return [];
+    }
+  }
+
+  Future createEvent(BuildContext context, String title, String eventStartTime,
+      String eventEndTime, String placeId) async {
+    try {
+      await LoginAPI().logIn("dvamain@gmail.com", "nerfthis!");
+      String token = await LoginAPI().getToken();
+      final response = await http.post(Strings.wandr_url + "/events",
+          body: json.encode({
+            "Title": title,
+            "EventStartTime": eventStartTime,
+            "EventEndTime": eventEndTime,
+            "PlaceID": placeId
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          });
+      if (response.statusCode == 201) {
+        //Iterable l = jsonDecode(response.body);
+        print("Response status: ${response.statusCode}");
+        print("Response status: ${response.body}");
+        iosAlert(context: context, content: "You've joined the event!");
+        // return List<Eventitem>.from(l.map((e) => Eventitem.fromJson(e)));
+      } else {
+        throw Exception("Failed to join Event");
+      }
+    } catch (e) {
+      iosAlert(context: context, content: "Failed to join event !");
       return [];
     }
   }

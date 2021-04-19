@@ -31,25 +31,26 @@ class EventController extends ChangeNotifier {
     return this._eventItem;
   }
 
-  getEventData() async {
+  getEventData({@required BuildContext context}) async {
     notifyListeners();
     _eventItem = await API_Manager().getDateOfEvents(
         id: _id.toString(),
+        context: context,
         date: "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}");
     isLoading = false;
     notifyListeners();
     return _eventItem;
   }
 
-  void addDay() {
+  void addDay(BuildContext context) {
     selectedDate = selectedDate.add(const Duration(days: 1));
     getEventsOfParticularDay();
     notifyListeners();
   }
 
-  void subtractDay() {
+  void subtractDay(BuildContext context) {
     selectedDate = selectedDate.subtract(const Duration(days: 1));
-    getEventsOfParticularDay();
+    //getEventData(context: context);
     notifyListeners();
   }
 

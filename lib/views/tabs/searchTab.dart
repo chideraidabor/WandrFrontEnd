@@ -90,7 +90,9 @@ class _SearchTabState extends State<SearchTab> {
             builder: (context) => NewCalendarPage(
                 //not supposed to pass in the search. pass the title of the
                 //place. cities[index].cityName
-                placeName: searchController.text),
+                placeName: searchController.text,
+                placeId: places[index].placeId,
+                ),
           ),
         );
       },
