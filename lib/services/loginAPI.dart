@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wandr_frontend/strings.dart';
 
 class LoginAPI {
-
-    Future<bool> setToken(String value) async {
+  Future<bool> setToken(String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('token', value);
   }
@@ -13,27 +12,27 @@ class LoginAPI {
   Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
-
   }
 
-        logIn(String email, String pass) async {
-         // String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE1NDc1OTkzLCJleHAiOjE2MzEyNDM5OTN9.8ERgLqGcaHhoxTB_hVoYYvCY7_sgHUlsJBHAcXde2hM";
-         //token of a user that has an event eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE4MzMzNTIwLCJleHAiOjE2MzQxMDE1MjB9.YiL30W4ClBIm8OMhKvcHOlEHFRVvYoehbIj0q-Q0QUI
-          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-          Map body = {"Email" : email, "Password" : pass};
-          var jsonResponse;
-          String token = await getToken();
+  logIn(String email, String pass) async {
+    // String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE1NDc1OTkzLCJleHAiOjE2MzEyNDM5OTN9.8ERgLqGcaHhoxTB_hVoYYvCY7_sgHUlsJBHAcXde2hM";
 
-          var res = await http.post(Strings.wandr_url+"/login", body: body);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map body = {"Email": email, "Password": pass};
+    var jsonResponse;
+    String token = await getToken();
 
-          // check the api status
-          if (res.statusCode == 200){
-            jsonResponse = json.decode(res.body);
-            setToken(jsonResponse['data']['token']['token']);
-            //sharedPreferences.setString("token", jsonResponse['token']);
-          }else{
-            print("Response status: ${res.body}");
-          }
-        }
+    var res = await http.post(Strings.wandr_url + "/login", body: body);
+
+    // check the api status
+    if (res.statusCode == 200) {
+      jsonResponse = json.decode(res.body);
+      setToken(jsonResponse['data']['token']['token']);
+      //sharedPreferences.setString("token", jsonResponse['token']);
+      return true;
+    } else {
+      print("Response status: ${res.body}");
+      return false;
+    }
+  }
 }
-

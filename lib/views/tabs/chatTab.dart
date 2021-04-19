@@ -9,6 +9,31 @@ class ChatTab extends StatefulWidget {
 }
 
 class _ChatTabState extends State<ChatTab> {
+
+  nested({List<Widget> children}) {
+    return NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+                expandedHeight: 200.0,
+                floating: false,
+                pinned: false,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text(
+                    "Chats",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                )
+            )
+          ];
+        }
+
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +56,7 @@ class _ChatTabState extends State<ChatTab> {
           ),
         ],
       ),
-      body: Column(
+      body: nested(
         children: <Widget>[
           CategorySelector(),
           Expanded(
