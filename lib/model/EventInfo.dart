@@ -6,7 +6,6 @@ class Eventitem {
   final int eventId;
   final String eventTitle;
   final DateTime createdAt;
-  //final createdAt = new DateTime.now();
   final DateTime eventStartTime;
   final DateTime eventEndTime;
 
